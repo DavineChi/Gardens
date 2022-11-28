@@ -1,0 +1,24 @@
+Garden Simulator ("Gardens")
+----------------------------------------------------------------------------------------
+The garden will be represented visually as a grid with cells where the plants are grown.
+User will be asked to choose from three sizes (small, medium, or large).
+Plant placement will be random as planting occurs.
+ - Future version will allow partitioning for different plants.
+When planting, the user will be asked at what density to plant the given seed.
+ - This will be based on free garden space and seeds on-hand.
+Passage of time, growth, and other as-yet undefined game functions will be turn-based.
+There will be an in-game currency.
+There will be a market where seeds can be purchased.
+Water will be a resource.
+Sunlight will be a resource.
+Soil nutrients will be a resource.
+ - Possibly to provide growth bonuses.
+Larger gardens (grid size) must somehow be more challenging.
+Yields can be sold at a market for profit.
+
+---------------------------------------------------------------
+Do not spend any time making the game look pretty.
+Just get it working for now (text-based).
+
+
+
