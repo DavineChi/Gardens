@@ -29,7 +29,8 @@ public class Ground {
 	private GroundType groundType;
 	private Rectangle boundingBox;
 	private boolean hovered;
-	private boolean clicked;
+	private boolean leftClicked;
+	private boolean rightClicked;
 	private Plant plant;
 	
 	public Ground(float x, float y, TextureRegion textureRegion, GroundType groundType) {
@@ -46,7 +47,8 @@ public class Ground {
 		this.groundType = groundType;
 		this.boundingBox = new Rectangle(this.x, this.y, Constants.TILE_WIDTH, Constants.TILE_HEIGHT);
 		this.hovered = false;
-		this.clicked = false;
+		this.leftClicked = false;
+		this.rightClicked = false;
 		
 		//Texture spriteSheetSoil = new Texture(Gdx.files.internal("plowed_soil_highlight.png"));
 		//plowedSoilHovered = new TextureRegion(spriteSheetSoil, 32, 96, 32, 32);
@@ -64,7 +66,7 @@ public class Ground {
 	public Rectangle getBoundingBox() { return boundingBox; }
 	
 	public boolean hovered() { return hovered; }
-	public boolean clicked() { return clicked; }
+	public boolean clicked() { return leftClicked; }
 	
 	public Plant getPlant() { return plant; }
 	
@@ -80,7 +82,18 @@ public class Ground {
 		this.plant = null;
 	}
 	
-	private void handleOnClick() {
+	private void handleRightClick() {
+		
+		if (plant != null) {
+			
+			String plantRemoved = plant.getName();
+			
+			removePlant();
+			ActivityLog.addMessage("Removed: " + plantRemoved);
+		}
+	}
+	
+	private void handleLeftClick() {
 		
 		if (plant != null) {
 			
@@ -89,7 +102,8 @@ public class Ground {
 				String plantRemoved = plant.getName();
 				
 				removePlant();
-				ActivityLog.addMessage("Removed: " + plantRemoved + " [index=" + index + "]");
+				//ActivityLog.addMessage("Removed: " + plantRemoved + " [index=" + index + "]");
+				ActivityLog.addMessage("Removed: " + plantRemoved);
 			}
 			
 			return;
@@ -98,7 +112,8 @@ public class Ground {
 		else {
 			
 			addPlant(new Carrot());
-			ActivityLog.addMessage("Added: " + plant.getName() + " [index=" + index + "]");
+			//ActivityLog.addMessage("Added: " + plant.getName() + " [index=" + index + "]");
+			ActivityLog.addMessage("Added: " + plant.getName());
 		}
 	}
 	
@@ -120,9 +135,14 @@ public class Ground {
 		}
 	}
 	
-	public void setClicked(boolean value) {
+	public void setLeftClicked(boolean value) {
 		
-		clicked = value;
+		leftClicked = value;
+	}
+	
+	public void setRightClicked(boolean value) {
+		
+		rightClicked = value;
 	}
 	
 	public void render(SpriteBatch spriteBatch) {
@@ -161,10 +181,16 @@ public class Ground {
 		
 		if (hovered) {
 			
-			if (clicked) {
+			if (leftClicked) {
 				
-				clicked = false;
-				handleOnClick();
+				leftClicked = false;
+				handleLeftClick();
+			}
+			
+			else if (rightClicked) {
+				
+				rightClicked = false;
+				handleRightClick();
 			}
 		}
 		

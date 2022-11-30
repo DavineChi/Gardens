@@ -1,17 +1,21 @@
 package com.farsight.screens;
 
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.farsight.Constants;
 import com.farsight.GardenGame;
 import com.farsight.components.World;
+import com.farsight.input.GameInputProcessor;
 import com.farsight.ui.UserInterface;
 
-public class GameScreen implements Screen {
+public class GameScreen extends ScreenAdapter {
 	
 	private final GardenGame game;
+	
+	private GameInputProcessor gameInputProcessor;
 	
 	private static SpriteBatch spriteBatch;
 	private static OrthographicCamera camera;
@@ -23,6 +27,7 @@ public class GameScreen implements Screen {
 		
 		this.game = game;
 		
+		gameInputProcessor = GameInputProcessor.instance();
 		camera = new OrthographicCamera();
 		userInterface = UserInterface.instance();
 		world = World.instance();
@@ -36,7 +41,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		
-		// TODO Auto-generated method stub
+		Gdx.input.setInputProcessor(gameInputProcessor);
 	}
 	
 	@Override
@@ -62,29 +67,8 @@ public class GameScreen implements Screen {
 	}
 	
 	@Override
-	public void resize(int width, int height) {
-		
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void pause() {
-		
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void resume() {
-		
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
 	public void hide() {
 		
-		// TODO Auto-generated method stub
+		Gdx.input.setInputProcessor(null);
 	}
-	
-	@Override
-	public void dispose() {  }
 }

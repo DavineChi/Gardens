@@ -1,4 +1,4 @@
-package com.farsight;
+package com.farsight.input;
 
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -7,25 +7,25 @@ import com.farsight.components.Ground;
 import com.farsight.components.World;
 import com.farsight.ui.UserInterface;
 
-public class InputHandler implements InputProcessor {
+public class GameInputProcessor implements InputProcessor {
 	
-	private static InputHandler inputHandler;
+	private static GameInputProcessor gameInputProcessor;
 	private static World world = World.instance();
 	private static UserInterface ui = UserInterface.instance();
 	
-	private InputHandler() {
+	private GameInputProcessor() {
 		
 		
 	}
 	
-	public static InputHandler instance() {
+	public static GameInputProcessor instance() {
 		
-		if (inputHandler == null) {
+		if (gameInputProcessor == null) {
 			
-			inputHandler = new InputHandler();
+			gameInputProcessor = new GameInputProcessor();
 		}
 		
-		return inputHandler;
+		return gameInputProcessor;
 	}
 	
 	private void processGroundClick(int button) {
@@ -37,7 +37,11 @@ public class InputHandler implements InputProcessor {
 			switch (button) {
 				
 				case Buttons.LEFT:
-					currentGround.setClicked(true);
+					currentGround.setLeftClicked(true);
+					break;
+					
+				case Buttons.RIGHT:
+					currentGround.setRightClicked(true);
 					break;
 			}
 		}
@@ -50,10 +54,6 @@ public class InputHandler implements InputProcessor {
 			
 			case Keys.T:
 				world.setKeyTDown(true);
-				break;
-				
-			case Buttons.LEFT:
-				processGroundClick(keycode);
 				break;
 				
 			case Keys.B:
@@ -97,6 +97,10 @@ public class InputHandler implements InputProcessor {
 				break;
 				
 			case Buttons.LEFT:
+				processGroundClick(button);
+				break;
+				
+			case Buttons.RIGHT:
 				processGroundClick(button);
 				break;
 		}

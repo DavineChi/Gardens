@@ -12,6 +12,8 @@ public class World {
 	private Garden garden;
 	private Market market;
 	private boolean keyTDown;
+	
+	private boolean displayGarden;
 	private boolean displayMarket;
 	
 	private World() {
@@ -21,6 +23,7 @@ public class World {
 		this.garden = new Garden();
 		this.market = new Market("Happy Hops");
 		this.keyTDown = false;
+		this.displayGarden = true;
 		this.displayMarket = false;
 	}
 	
@@ -54,6 +57,11 @@ public class World {
 		return garden;
 	}
 	
+	public Market getMarket() {
+		
+		return market;
+	}
+	
 	public void setKeyTDown(boolean value) {
 		
 		keyTDown = value;
@@ -69,23 +77,28 @@ public class World {
 		
 		if (displayMarket) {
 			
+			displayGarden = true;
 			displayMarket = false;
 		}
 		
 		else {
 			
+			displayGarden = false;
 			displayMarket = true;
 		}
 	}
 	
 	public void render(SpriteBatch spriteBatch) {
 		
-		sunDial.render(spriteBatch);
-		garden.render(spriteBatch);
-		
 		if (displayMarket) {
 			
 			market.render(spriteBatch);
+		}
+		
+		if (displayGarden) {
+			
+			sunDial.render(spriteBatch);
+			garden.render(spriteBatch);
 		}
 	}
 	
